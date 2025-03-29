@@ -1,11 +1,11 @@
 {
-    "name": "huyudb24cc149/movie-content-generator",
+    "name": "namhuunam/movie-content-generator",
     "description": "A Laravel package to generate movie content using Gemini AI API",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "HuyUDB24CC149",
+            "name": "namhuunam",
             "email": "your.email@example.com"
         }
     ],
@@ -17,13 +17,13 @@
     },
     "autoload": {
         "psr-4": {
-            "HuyUDB24CC149\\MovieContentGenerator\\": "src/"
+            "namhuunam\\MovieContentGenerator\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "HuyUDB24CC149\\MovieContentGenerator\\MovieContentGeneratorServiceProvider"
+                "namhuunam\\MovieContentGenerator\\MovieContentGeneratorServiceProvider"
             ]
         }
     }
