@@ -8,10 +8,18 @@ use namhuunam\MovieContentGenerator\Services\GeminiApiService;
 
 class MovieContentGeneratorServiceProvider extends ServiceProvider
 {
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         // Load routes
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+
+        // Đăng ký migrations
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         
         // Load views
         $this->loadViewsFrom(__DIR__.'/resources/views', 'movie-content-generator');
