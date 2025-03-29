@@ -17,10 +17,21 @@ php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieCont
 ## 2. Cấu hình môi trường
 Thêm các dòng sau vào file .env:
 ```bash
+# API key cho Google Gemini
 GEMINI_API_KEY=your_gemini_api_key_here
+
+# Tùy chỉnh prompt template
 GEMINI_PROMPT_TEMPLATE="Dựa trên tiêu đề {name} và mô tả {content}, hãy viết một bài viết về phim chuẩn SEO với độ dài khoảng 150 đến 300 từ tránh trùng lặp nội dung với nội dung các website khác. Ngôn ngữ 100% tiếng việt, tuyệt đối không dùng Markdown, không chèn ảnh, không chèn bất kỳ link, và ký tự đặc biệt nào."
-MOVIE_CONTENT_BATCH_SIZE=10
+
+# Cấu hình sinh nội dung
+MOVIE_CONTENT_MAX_BATCH=10
+
+# Cấu hình logging
 MOVIE_CONTENT_LOG_CHANNEL=movie-content
+
+# Cấu hình trang quản trị
+MOVIE_CONTENT_ADMIN_ENABLED=true
+MOVIE_CONTENT_ADMIN_URL=admin/movie-content
 ```
 ## 3. Cấu hình quyền hạn và xóa cache
 ```bash
@@ -90,7 +101,14 @@ Thêm Service Provider vào file config/app.php:
 composer clearcache
 composer update
 ```
-
+# Sử dụng
+1. Truy cập trang quản trị tại đường dẫn đã cấu hình (mặc định: /admin/movie-content)
+2. Sử dụng trang quản trị để tạo nội dung thủ công hoặc tự động
+3. Hoặc sử dụng lệnh artisan để tạo nội dung:
 ```bash
+# Tạo nội dung cho 5 phim đầu tiên với complete=0
+php artisan movies:generate-content --batch=5
 
+# Tạo lại nội dung cho tất cả phim (kể cả đã có nội dung)
+php artisan movies:generate-content --force
 ```
