@@ -2,14 +2,14 @@
 ## 1. Cài đặt package
 ```bash
 # Thêm repository vào composer.json
-composer config repositories.movie-content-generator vcs https://github.com/HuyUDB24CC149/movie-content-generator.git
+composer config repositories.movie-content-generator vcs https://github.com/namhuunam/movie-content-generator.git
 
 # Cài đặt package
-composer require huyudb24cc149/movie-content-generator:dev-main
+composer require namhuunam/movie-content-generator:dev-main
 
 # Xuất file cấu hình và view
-php artisan vendor:publish --provider="HuyUDB24CC149\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="config"
-php artisan vendor:publish --provider="HuyUDB24CC149\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="views"
+php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="config"
+php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="views"
 ```
 ## 2. Cấu hình môi trường
 Thêm các dòng sau vào file .env:
@@ -96,7 +96,7 @@ crontab -e
 ## Sửa lỗi Gemini API không hoạt động
 Chỉnh sửa file GeminiApiService.php:
 ```bash
-nano vendor/huyudb24cc149/movie-content-generator/src/Services/GeminiApiService.php
+nano vendor/namhuunam/movie-content-generator/src/Services/GeminiApiService.php
 ```
 Cập nhật model và phiên bản API:
 ```bash
@@ -119,7 +119,7 @@ chown -R www-data:www-data storage/logs
 ```bash
 'providers' => [
     // Các providers khác...
-    HuyUDB24CC149\MovieContentGenerator\MovieContentGeneratorServiceProvider::class,
+    namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider::class,
 ],
 ```
 # Lỗi không tìm thấy package
