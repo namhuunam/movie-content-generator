@@ -1,6 +1,6 @@
 <?php
 
-namespace HuyUDB24CC149\MovieContentGenerator\Services;
+namespace namhuunam\MovieContentGenerator\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
