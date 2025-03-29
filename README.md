@@ -7,6 +7,9 @@ composer config repositories.movie-content-generator vcs https://github.com/namh
 # Cài đặt package
 composer require namhuunam/movie-content-generator:dev-main
 
+# Chạy lệnh cài đặt tự động
+php artisan movie-content:install
+
 # Xuất file cấu hình và view
 php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="config"
 php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="views"
