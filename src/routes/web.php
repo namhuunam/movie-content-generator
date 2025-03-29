@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use HuyUDB24CC149\MovieContentGenerator\Http\Controllers\AdminController;
+use namhuunam\MovieContentGenerator\Http\Controllers\AdminController;
 
 Route::middleware(['web', 'auth'])
     ->prefix('admin/movie-content')
