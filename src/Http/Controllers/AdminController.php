@@ -1,6 +1,6 @@
 <?php
 
-namespace HuyUDB24CC149\MovieContentGenerator\Http\Controllers;
+namespace namhuunam\MovieContentGenerator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
