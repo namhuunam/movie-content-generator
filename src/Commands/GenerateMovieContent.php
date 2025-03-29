@@ -1,11 +1,11 @@
 <?php
 
-namespace HuyUDB24CC149\MovieContentGenerator\Commands;
+namespace namhuunam\MovieContentGenerator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use HuyUDB24CC149\MovieContentGenerator\Services\GeminiApiService;
+use namhuunam\MovieContentGenerator\Services\GeminiApiService;
 use Exception;
 
 class GenerateMovieContent extends Command
