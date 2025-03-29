@@ -1,10 +1,10 @@
 <?php
 
-namespace HuyUDB24CC149\MovieContentGenerator;
+namespace namhuunam\MovieContentGenerator;
 
 use Illuminate\Support\ServiceProvider;
-use HuyUDB24CC149\MovieContentGenerator\Commands\GenerateMovieContent;
-use HuyUDB24CC149\MovieContentGenerator\Services\GeminiApiService;
+use namhuunam\MovieContentGenerator\Commands\GenerateMovieContent;
+use namhuunam\MovieContentGenerator\Services\GeminiApiService;
 
 class MovieContentGeneratorServiceProvider extends ServiceProvider
 {
