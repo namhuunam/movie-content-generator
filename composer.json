@@ -10,10 +10,11 @@
         }
     ],
     "scripts": {
-        "post-install-cmd": [
+        "post-autoload-dump": [
             "@php artisan migrate --path=vendor/namhuunam/movie-content-generator/database/migrations"
         ]
     },
+    
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
