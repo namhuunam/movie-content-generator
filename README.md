@@ -116,6 +116,7 @@ chmod -R 775 storage/logs
 chown -R www-data:www-data storage/logs
 ```
 # Lỗi không thể tìm thấy Service Provider
+Thêm Service Provider vào file config/app.php:
 ```bash
 'providers' => [
     // Các providers khác...
