@@ -56,5 +56,12 @@ class MovieContentGeneratorServiceProvider extends ServiceProvider
         $this->app->singleton(GeminiApiService::class, function ($app) {
             return new GeminiApiService(config('movie-content-generator.gemini_api_key'));
         });
+        // Đăng ký lệnh artisan
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \namhuunam\MovieContentGenerator\Console\Commands\GenerateContentCommand::class,
+                \namhuunam\MovieContentGenerator\Console\Commands\InstallCommand::class,
+            ]);
+        }
     }
 }
