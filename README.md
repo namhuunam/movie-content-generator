@@ -22,48 +22,7 @@ GEMINI_PROMPT_TEMPLATE="Dựa trên tiêu đề {name} và mô tả {content}, h
 MOVIE_CONTENT_BATCH_SIZE=10
 MOVIE_CONTENT_LOG_CHANNEL=movie-content
 ```
-Thêm channel log mới vào file config/logging.php:
-```bash
-'channels' => [
-    // Các channels khác...
-    
-    'movie-content' => [
-        'driver' => 'single',
-        'path' => storage_path('logs/movie-content.log'),
-        'level' => 'debug',
-    ],
-],
-```
-## 3. Cập nhật cơ sở dữ liệu
-Tạo migration để thêm cột complete vào bảng movies:
-```bash
-php artisan make:migration add_complete_column_to_movies_table --table=movies
-```
-Mở file migration vừa tạo và thêm nội dung:
-```bash
-public function up()
-{
-    Schema::table('movies', function (Blueprint $table) {
-        if (!Schema::hasColumn('movies', 'complete')) {
-            $table->boolean('complete')->default(0);
-        }
-    });
-}
-
-public function down()
-{
-    Schema::table('movies', function (Blueprint $table) {
-        if (Schema::hasColumn('movies', 'complete')) {
-            $table->dropColumn('complete');
-        }
-    });
-}
-```
-### Chạy migration:
-```bash
-php artisan migrate
-```
-## 4. Cấu hình quyền hạn và xóa cache
+## 3. Cấu hình quyền hạn và xóa cache
 ```bash
 # Đặt quyền hạn cho thư mục storage
 chown -R www-data:www-data storage bootstrap/cache
@@ -75,7 +34,7 @@ php artisan cache:clear
 php artisan view:clear
 php artisan route:clear
 ```
-## 5. Kiểm tra cài đặt
+## 4. Kiểm tra cài đặt
 ```bash
 # Kiểm tra lệnh artisan
 php artisan list | grep movies
@@ -86,7 +45,7 @@ php artisan route:list | grep movie-content
 # Thử chạy lệnh tạo nội dung
 php artisan movies:generate-content --batch=1
 ```
-## 6. Thiết lập Cron Job
+## 5. Thiết lập Cron Job
 Thêm dòng sau vào crontab:
 ```bash
 crontab -e
