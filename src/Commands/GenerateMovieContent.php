@@ -57,19 +57,19 @@ class GenerateMovieContent extends Command
                     );
 
                     $generatedContent = $this->geminiService->generateContent($prompt);
+                    $generatedContent = '<p>' . $generatedContent . '</p>';
 
                     DB::table('movies')
                         ->where('id', $movie->id)
                         ->update([
                             'content' => $generatedContent,
-                            'complete' => 1,
-                            'updated_at' => now()
+                            'complete' => 1
                         ]);
 
                     $bar->advance();
                     
                     // Add a small delay to avoid rate limiting
-                    sleep(1);
+                    sleep(2);
                     
                 } catch (Exception $e) {
                     $bar->finish();
