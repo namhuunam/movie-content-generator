@@ -11,7 +11,7 @@ return [
     */
     'gemini_api_key' => env('GEMINI_API_KEY', ''),
     'gemini_api_endpoint' => env('GEMINI_API_ENDPOINT', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'),
-    'gemini_model' => env('GEMINI_MODEL', 'gemini-pro'),
+    'gemini_model' => env('GEMINI_MODEL', 'gemini-1.5-flash-8b'),
 
     /*
     |--------------------------------------------------------------------------
