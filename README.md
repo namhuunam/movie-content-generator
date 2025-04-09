@@ -64,7 +64,9 @@ crontab -e
 ```
 ```bash
 # Chạy tự động mỗi giờ
-0 * * * * cd /path/to/your/laravel/project && php artisan movies:generate-content --force >> /dev/null 2>&1
+*/15 * * * * cd /path/to/your/laravel/project && php artisan movies:generate-content --force >> /dev/null 2>&1
+*/15 * * * * cd /path/to/your/laravel/project && php artisan movies:generate-content --batch=50 >> /dev/null 2>&1
+*/15 * * * * cd /path/to/your/laravel/project && php artisan movies:generate-content >> /dev/null 2>&1
 ```
 ## 6 Kiểm tra debug
 ```bash
