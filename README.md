@@ -66,6 +66,10 @@ crontab -e
 # Chạy tự động mỗi giờ
 0 * * * * cd /path/to/your/laravel/project && php artisan movies:generate-content --force >> /dev/null 2>&1
 ```
+## 6 Kiểm tra debug
+```bash
+https://vlxxz.pro/movie-debug
+```
 # Xử lý sự cố
 ## Sửa lỗi Gemini API không hoạt động
 Chỉnh sửa file GeminiApiService.php:
