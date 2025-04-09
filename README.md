@@ -13,6 +13,7 @@ php artisan movie-content:install
 # Xuất file cấu hình và view
 php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="config"
 php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --tag="views"
+php artisan vendor:publish --provider="namhuunam\MovieContentGenerator\MovieContentGeneratorServiceProvider" --force
 ```
 ## 2. Cấu hình môi trường
 Thêm các dòng sau vào file .env:
