@@ -15,7 +15,7 @@ class GeminiApiService
     public function __construct()
     {
         $this->apiKey = config('movie-content-generator.gemini_api_key');
-        $this->model = config('movie-content-generator.gemini_model', 'gemini-pro');
+        $this->model = config('movie-content-generator.gemini_model', 'gemini-1.5-flash-8b');
         $this->baseUrl = config('movie-content-generator.gemini_api_endpoint', 
             "https://generativelanguage.googleapis.com/v1beta/models/{$this->model}:generateContent");
     }
