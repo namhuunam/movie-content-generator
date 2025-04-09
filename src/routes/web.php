@@ -5,7 +5,7 @@ use namhuunam\MovieContentGenerator\Http\Controllers\AdminController;
 
 // Kiểm tra xem tính năng admin có được bật hay không
 if (config('movie-content-generator.admin.enabled', true)) {
-    $adminUrl = config('movie-content-generator.admin.url', 'manager/movie-content');
+    $adminUrl = config('movie-content-generator.admin.url', 'admin/movie-content');
     $middleware = config('movie-content-generator.admin.middleware', ['web']);
     
     Route::middleware($middleware)->group(function () use ($adminUrl) {
@@ -19,8 +19,9 @@ if (config('movie-content-generator.admin.enabled', true)) {
     });
     Route::get('movie-debug', function () {
         try {
-            // Gọi service của package
-            $stats = app()->make('namhuunam\MovieContentGenerator\Services\MovieStatsService')->getStats();
+            // Sử dụng AdminController thay vì MovieStatsService không tồn tại
+            $controller = new \namhuunam\MovieContentGenerator\Http\Controllers\AdminController();
+            $stats = $controller->index()->getData()['stats'];
             return response()->json(['stats' => $stats, 'success' => true]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
