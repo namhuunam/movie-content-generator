@@ -120,3 +120,9 @@ php artisan movies:generate-content --batch=5
 # Tạo lại nội dung cho tất cả phim (kể cả đã có nội dung)
 php artisan movies:generate-content --force
 ```
+# đặt complete content dưới 500 ký tự
+```bash
+UPDATE movies
+SET complete = 0
+WHERE LENGTH(content) < 500;
+```
