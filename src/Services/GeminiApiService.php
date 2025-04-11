@@ -30,6 +30,11 @@ class GeminiApiService
     public function generateContent(string $prompt): string
     {
         try {
+            // Log gọi API
+            Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                ->info("Calling Gemini API with prompt: " . substr($prompt, 0, 100) . "...");
+            
+            // Gọi API Gemini
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])->post($this->baseUrl . '?key=' . $this->apiKey, [
@@ -48,11 +53,29 @@ class GeminiApiService
                 ]
             ]);
 
+            // Kiểm tra response
             if ($response->successful()) {
                 $data = $response->json();
                 
+                // Log phản hồi API
+                Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                    ->debug("API response status: success");
+                
                 if (isset($data['candidates'][0]['content']['parts'][0]['text'])) {
-                    return $data['candidates'][0]['content']['parts'][0]['text'];
+                    $content = $data['candidates'][0]['content']['parts'][0]['text'];
+                    
+                    // Kiểm tra nội dung trả về
+                    if (empty(trim($content))) {
+                        Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                            ->warning("API returned empty content");
+                        throw new Exception('API returned empty content');
+                    }
+                    
+                    // Log nội dung trả về (một phần)
+                    Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                        ->debug("API returned content: " . substr($content, 0, 100) . "...");
+                    
+                    return $content;
                 } else {
                     Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
                         ->error('Unexpected API response structure: ' . json_encode($data));
