@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use namhuunam\MovieContentGenerator\Commands\GenerateMovieContent;
 use namhuunam\MovieContentGenerator\Commands\InstallCommand;
 use namhuunam\MovieContentGenerator\Services\GeminiApiService;
-
+use Illuminate\Support\Facades\Route;
 class MovieContentGeneratorServiceProvider extends ServiceProvider
 {
     /**
@@ -43,6 +43,15 @@ class MovieContentGeneratorServiceProvider extends ServiceProvider
                 GenerateMovieContent::class,
                 InstallCommand::class,
             ]);
+        }
+        if (config('app.env') !== 'production') {
+            Route::get('/movie-debug', [
+                \namhuunam\MovieContentGenerator\Http\Controllers\DebugController::class, 'index'
+            ])->name('movie-content-generator.debug');
+            
+            Route::get('/movie-debug/{id}', [
+                \namhuunam\MovieContentGenerator\Http\Controllers\DebugController::class, 'testMovie'
+            ])->name('movie-content-generator.debug.movie');
         }
     }
 
