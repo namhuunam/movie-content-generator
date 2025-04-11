@@ -32,13 +32,17 @@ class GenerateMovieContent extends Command
         }
 
         try {
-            $movies = DB::table('movies')
-                ->where('complete', 0)
-                ->take($batchSize)
-                ->get();
+            // Lấy danh sách phim cần xử lý
+            $query = DB::table('movies');
+            
+            if (!$force) {
+                $query->where('complete', 0);
+            }
+            
+            $movies = $query->take($batchSize)->get();
 
             if ($movies->isEmpty()) {
-                $this->info('No movies found with complete = 0. All done!');
+                $this->info('No movies found to process. All done!');
                 return 0;
             }
 
@@ -56,19 +60,47 @@ class GenerateMovieContent extends Command
                         $promptTemplate
                     );
 
+                    // Gọi API Gemini để sinh nội dung
                     $generatedContent = $this->geminiService->generateContent($prompt);
-                    $generatedContent = '<p>' . $generatedContent . '</p>';
-
+                    
+                    // Kiểm tra nội dung sinh ra có hợp lệ không
+                    if (empty($generatedContent) || strlen(trim($generatedContent)) < 50) {
+                        Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                            ->warning("Movie ID {$movie->id}: Generated content is too short or empty. Not updating.");
+                        
+                        $bar->advance();
+                        sleep(2);
+                        continue;
+                    }
+                    
+                    // Định dạng nội dung sinh ra
+                    $formattedContent = '<p>' . $generatedContent . '</p>';
+                    
+                    // Kiểm tra nếu nội dung mới giống nội dung cũ
+                    $currentContent = $movie->content;
+                    if (trim($currentContent) == trim($formattedContent)) {
+                        Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                            ->warning("Movie ID {$movie->id}: Generated content is identical to existing content. Not updating.");
+                            
+                        $bar->advance();
+                        sleep(2);
+                        continue;
+                    }
+                    
+                    // Cập nhật nội dung mới và đánh dấu đã hoàn thành
                     DB::table('movies')
                         ->where('id', $movie->id)
                         ->update([
-                            'content' => $generatedContent,
+                            'content' => $formattedContent,
                             'complete' => 1
                         ]);
+                    
+                    Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
+                        ->info("Movie ID {$movie->id}: Content updated successfully.");
 
                     $bar->advance();
                     
-                    // Add a small delay to avoid rate limiting
+                    // Thêm độ trễ nhỏ để tránh rate limiting
                     sleep(2);
                     
                 } catch (Exception $e) {
@@ -79,6 +111,8 @@ class GenerateMovieContent extends Command
                     Log::channel(config('movie-content-generator.log_channel', 'movie-content'))
                         ->error("Error processing movie ID {$movie->id}: {$e->getMessage()}");
                     
+                    // Không đánh dấu phim là đã hoàn thành khi có lỗi xảy ra
+                    // Nếu không dùng --force thì dừng lại
                     if (!$force) {
                         return 1;
                     }
